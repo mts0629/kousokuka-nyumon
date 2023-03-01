@@ -66,3 +66,19 @@ y = (a + b + c) * x
 	.loc 1 28 0 discriminator 2
 	jne	.L3
 ```
+
+## 一時変数の使用
+
+冗長な演算の繰り返しが発生する際、一時変数に値を格納して再利用する。
+
+```c
+float x = a * cos(rad);
+float y = b * cos(rad);
+```
+
+```c
+float cos_r = cos(rad);
+float x = a * cos_r
+float y = b * cos_r
+```
+
