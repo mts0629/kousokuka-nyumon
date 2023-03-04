@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "omp.h"
-
 int main()
 {
     const int LOOP = 65536;
@@ -23,7 +21,6 @@ int main()
     clock_t startTime = clock();
 
     // Main processing
-#pragma omp parallel for
     for (int j = 0; j < LOOP; j++) {
         for (int i = 0; i < N; i++) {
             y[i] = a * x[i] + b * x[i] + c * x[i];

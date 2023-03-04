@@ -10,7 +10,7 @@
 main:
 .LFB14:
 	.file 1 "source.cpp"
-	.loc 1 8 0
+	.loc 1 6 0
 	.cfi_startproc
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
@@ -18,63 +18,63 @@ main:
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 	subq	$524368, %rsp
-	.loc 1 8 0
+	.loc 1 6 0
 	movq	%fs:40, %rax
 	movq	%rax, -8(%rbp)
 	xorl	%eax, %eax
-	.loc 1 9 0
+	.loc 1 7 0
 	movl	$65536, -524332(%rbp)
-	.loc 1 10 0
+	.loc 1 8 0
 	movl	$65536, -524328(%rbp)
-	.loc 1 12 0
+	.loc 1 10 0
 	call	rand@PLT
 	cvtsi2ss	%eax, %xmm0
 	movss	%xmm0, -524356(%rbp)
-	.loc 1 13 0
+	.loc 1 11 0
 	call	rand@PLT
 	cvtsi2ss	%eax, %xmm0
 	movss	%xmm0, -524352(%rbp)
-	.loc 1 14 0
+	.loc 1 12 0
 	call	rand@PLT
 	cvtsi2ss	%eax, %xmm0
 	movss	%xmm0, -524348(%rbp)
 .LBB2:
-	.loc 1 19 0
+	.loc 1 17 0
 	movl	$0, -524344(%rbp)
 .L3:
-	.loc 1 19 0 is_stmt 0 discriminator 3
+	.loc 1 17 0 is_stmt 0 discriminator 3
 	cmpl	$65535, -524344(%rbp)
 	jg	.L2
-	.loc 1 20 0 is_stmt 1 discriminator 2
+	.loc 1 18 0 is_stmt 1 discriminator 2
 	call	rand@PLT
 	cvtsi2ss	%eax, %xmm0
 	movl	-524344(%rbp), %eax
 	cltq
 	movss	%xmm0, -524304(%rbp,%rax,4)
-	.loc 1 19 0 discriminator 2
+	.loc 1 17 0 discriminator 2
 	addl	$1, -524344(%rbp)
 	jmp	.L3
 .L2:
 .LBE2:
-	.loc 1 23 0
+	.loc 1 21 0
 	call	clock@PLT
 	movq	%rax, -524320(%rbp)
 .LBB3:
-	.loc 1 27 0
+	.loc 1 24 0
 	movl	$0, -524340(%rbp)
 .L7:
-	.loc 1 27 0 is_stmt 0 discriminator 1
+	.loc 1 24 0 is_stmt 0 discriminator 1
 	cmpl	$65535, -524340(%rbp)
 	jg	.L4
 .LBB4:
 .LBB5:
-	.loc 1 28 0 is_stmt 1
+	.loc 1 25 0 is_stmt 1
 	movl	$0, -524336(%rbp)
 .L6:
-	.loc 1 28 0 is_stmt 0 discriminator 3
+	.loc 1 25 0 is_stmt 0 discriminator 3
 	cmpl	$65535, -524336(%rbp)
 	jg	.L5
-	.loc 1 29 0 is_stmt 1 discriminator 2
+	.loc 1 26 0 is_stmt 1 discriminator 2
 	movl	-524336(%rbp), %eax
 	cltq
 	movss	-524304(%rbp,%rax,4), %xmm1
@@ -95,35 +95,35 @@ main:
 	movl	-524336(%rbp), %eax
 	cltq
 	movss	%xmm0, -262160(%rbp,%rax,4)
-	.loc 1 28 0 discriminator 2
+	.loc 1 25 0 discriminator 2
 	addl	$1, -524336(%rbp)
 	jmp	.L6
 .L5:
 .LBE5:
 .LBE4:
-	.loc 1 27 0 discriminator 2
+	.loc 1 24 0 discriminator 2
 	addl	$1, -524340(%rbp)
 	jmp	.L7
 .L4:
 .LBE3:
-	.loc 1 33 0
+	.loc 1 30 0
 	call	clock@PLT
 	movq	%rax, -524312(%rbp)
-	.loc 1 35 0
+	.loc 1 32 0
 	movq	-524312(%rbp), %rax
 	subq	-524320(%rbp), %rax
 	cvtsi2ssq	%rax, %xmm0
 	movss	.LC0(%rip), %xmm1
 	divss	%xmm1, %xmm0
 	movss	%xmm0, -524324(%rbp)
-	.loc 1 36 0
+	.loc 1 33 0
 	cvtss2sd	-524324(%rbp), %xmm0
 	leaq	.LC1(%rip), %rdi
 	movl	$1, %eax
 	call	printf@PLT
-	.loc 1 38 0
+	.loc 1 35 0
 	movl	$0, %eax
-	.loc 1 39 0
+	.loc 1 36 0
 	movq	-8(%rbp), %rdx
 	xorq	%fs:40, %rdx
 	je	.L9
@@ -1885,7 +1885,7 @@ main:
 	.uleb128 0x2d
 	.long	.LASF177
 	.byte	0x1
-	.byte	0x7
+	.byte	0x5
 	.long	0x2cd
 	.quad	.LFB14
 	.quad	.LFE14-.LFB14
@@ -1895,7 +1895,7 @@ main:
 	.uleb128 0x2e
 	.long	.LASF166
 	.byte	0x1
-	.byte	0x9
+	.byte	0x7
 	.long	0x2d4
 	.uleb128 0x4
 	.byte	0x91
@@ -1903,7 +1903,7 @@ main:
 	.uleb128 0x2f
 	.string	"N"
 	.byte	0x1
-	.byte	0xa
+	.byte	0x8
 	.long	0x2d4
 	.uleb128 0x4
 	.byte	0x91
@@ -1911,7 +1911,7 @@ main:
 	.uleb128 0x2f
 	.string	"a"
 	.byte	0x1
-	.byte	0xc
+	.byte	0xa
 	.long	0x8bb
 	.uleb128 0x4
 	.byte	0x91
@@ -1919,7 +1919,7 @@ main:
 	.uleb128 0x2f
 	.string	"b"
 	.byte	0x1
-	.byte	0xd
+	.byte	0xb
 	.long	0x8bb
 	.uleb128 0x4
 	.byte	0x91
@@ -1927,7 +1927,7 @@ main:
 	.uleb128 0x2f
 	.string	"c"
 	.byte	0x1
-	.byte	0xe
+	.byte	0xc
 	.long	0x8bb
 	.uleb128 0x4
 	.byte	0x91
@@ -1935,7 +1935,7 @@ main:
 	.uleb128 0x2f
 	.string	"x"
 	.byte	0x1
-	.byte	0x10
+	.byte	0xe
 	.long	0xf8e
 	.uleb128 0x4
 	.byte	0x91
@@ -1943,7 +1943,7 @@ main:
 	.uleb128 0x2f
 	.string	"y"
 	.byte	0x1
-	.byte	0x10
+	.byte	0xe
 	.long	0xf8e
 	.uleb128 0x4
 	.byte	0x91
@@ -1951,7 +1951,7 @@ main:
 	.uleb128 0x2e
 	.long	.LASF167
 	.byte	0x1
-	.byte	0x17
+	.byte	0x15
 	.long	0x965
 	.uleb128 0x4
 	.byte	0x91
@@ -1959,7 +1959,7 @@ main:
 	.uleb128 0x2e
 	.long	.LASF168
 	.byte	0x1
-	.byte	0x21
+	.byte	0x1e
 	.long	0x965
 	.uleb128 0x4
 	.byte	0x91
@@ -1967,7 +1967,7 @@ main:
 	.uleb128 0x2e
 	.long	.LASF169
 	.byte	0x1
-	.byte	0x23
+	.byte	0x20
 	.long	0x8b4
 	.uleb128 0x4
 	.byte	0x91
@@ -1979,7 +1979,7 @@ main:
 	.uleb128 0x2f
 	.string	"i"
 	.byte	0x1
-	.byte	0x13
+	.byte	0x11
 	.long	0x2cd
 	.uleb128 0x4
 	.byte	0x91
@@ -1991,7 +1991,7 @@ main:
 	.uleb128 0x2f
 	.string	"j"
 	.byte	0x1
-	.byte	0x1b
+	.byte	0x18
 	.long	0x2cd
 	.uleb128 0x4
 	.byte	0x91
@@ -2002,7 +2002,7 @@ main:
 	.uleb128 0x2f
 	.string	"i"
 	.byte	0x1
-	.byte	0x1c
+	.byte	0x19
 	.long	0x2cd
 	.uleb128 0x4
 	.byte	0x91
@@ -2768,8 +2768,6 @@ main:
 	.string	"float"
 .LASF76:
 	.string	"fgetpos"
-.LASF172:
-	.string	"/home/ubuntu/github/kousokuka-nyumon/chapter2"
 .LASF111:
 	.string	"long long unsigned int"
 .LASF133:
@@ -3022,6 +3020,8 @@ main:
 	.string	"atol"
 .LASF99:
 	.string	"double"
+.LASF172:
+	.string	"/home/ubuntu/github/kousokuka-nyumon/chapter2/compiler_option"
 .LASF149:
 	.string	"tm_gmtoff"
 .LASF28:
