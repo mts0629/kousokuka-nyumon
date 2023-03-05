@@ -116,7 +116,7 @@ for (int j = 0; j < LOOP; j++) {
     	jne	.L4
     ```
 
-演算処理箇所 (ソース26行目、 `loc 1 26 0 is_stmt 1 discriminator 2` ）のアセンブリコードが短縮されている。
+演算処理箇所 (ソース26行目、 `loc 1 26 0 is_stmt 1 discriminator 2` 以降）のアセンブリコードが短縮されている（ `movl` によるレジスタへの転送と、 `cltq` によるビット幅変換が削減されている）。
 
 実行時間は、O1適用により半減し下げ止まっている。
 
@@ -137,62 +137,72 @@ Elapsed time =       4.3948269 sec
 Elapsed time =       4.4080281 sec
 ```
 
-## 括弧でくくる
+## 初歩的な最適化
 
-次のような複数回の乗算が現れる式について、
+### 括弧でくくる
 
-```cpp
-y = a * x + b * x + c * x
-```
-
-式を括弧でくくり、乗算の回数を減らす。
+式中の同類項をまとめ、乗算の回数を減らす。
 
 ```cpp
-y = (a + b + c) * x
+// Main processing
+for (int j = 0; j < LOOP; j++) {
+    for (int i = 0; i < N; i++) {
+        y[i] = (a + b + c) * x[i];
+    }
+}
 ```
 
-括弧なし：乗算3回、加算2回
-
 ```asm
+.L4:
+.LBB9:
+.LBB10:
+	.loc 1 25 0
+	xorl	%eax, %eax
+.LVL9:
+	.p2align 4,,10
+	.p2align 3
+.L3:
+	.loc 1 26 0 discriminator 2
+	movss	4(%rsp), %xmm0
+	movslq	%eax, %rdx
+	.loc 1 25 0 discriminator 2
+	addl	$1, %eax
 .LVL10:
-	.loc 1 29 0 discriminator 2
-	movss	16(%rsp,%rax,4), %xmm0
-	.loc 1 28 0 discriminator 2
-	cmpl	$65536, %edx
-	.loc 1 29 0 discriminator 2
-	movss	4(%rsp), %xmm5
-	movss	16(%rsp,%rax,4), %xmm2
-	mulss	%xmm5, %xmm0
-	movss	8(%rsp), %xmm4
-	mulss	%xmm4, %xmm2
-	movss	16(%rsp,%rax,4), %xmm1
-	movss	12(%rsp), %xmm3
-	mulss	%xmm3, %xmm1
-	addss	%xmm2, %xmm0
-	addss	%xmm1, %xmm0
-	movss	%xmm0, 262160(%rsp,%rax,4)
-```
-
-括弧あり：乗算1回、加算2回
-
-```asm
-.LVL10:
-	.loc 1 29 0 discriminator 2
+	.loc 1 26 0 discriminator 2
 	movss	8(%rsp), %xmm3
-	.loc 1 28 0 discriminator 2
+	.loc 1 25 0 discriminator 2
 	cmpl	$65536, %eax
-	.loc 1 29 0 discriminator 2
+	.loc 1 26 0 discriminator 2
 	addss	%xmm3, %xmm0
 	movss	12(%rsp), %xmm2
 	movss	16(%rsp,%rdx,4), %xmm1
 	addss	%xmm2, %xmm0
 	mulss	%xmm1, %xmm0
 	movss	%xmm0, 262160(%rsp,%rdx,4)
-	.loc 1 28 0 discriminator 2
+	.loc 1 25 0 discriminator 2
 	jne	.L3
+.LVL11:
+.LBE10:
+	.loc 1 24 0 discriminator 2
+	subl	$1, %ecx
+.LVL12:
+	jne	.L4
 ```
 
-## 一時変数の使用
+`mulss` による乗算回数が1回に減り、実行時間も短縮されている。
+
+```
+$ ../compiler_option/bin/source-O2 
+Elapsed time =       4.4682999 sec
+$ ./bin/source-O2 
+Elapsed time =       3.3563571 sec
+```
+
+ただし、浮動小数点演算は演算順序により結果に誤差が生じる場合があり、精度が求められる場合注意が必要である。
+
+- 整数演算の場合は誤差が生じないため、コンパイラにより自動的に最適化されるケースがあるようだが、再現しなかった。
+
+### 一時変数の使用
 
 冗長な演算の繰り返しが発生する際、一時変数に値を格納して再利用する。
 
