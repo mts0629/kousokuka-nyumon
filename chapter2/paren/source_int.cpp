@@ -11,7 +11,7 @@ int main()
     volatile int b = rand();
     volatile int c = rand();
 
-    volatile float x[N], y[N];
+    volatile int x[N], y[N];
 
     // Initialize
     for (int i = 0; i < N; i++) {

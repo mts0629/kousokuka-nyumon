@@ -1,15 +1,34 @@
 #!/bin/bash -eu
 
-mkdir -p ./bin
+BIN_DIR=./bin
 
-g++ -O0 source.cpp -o ./bin/source
-g++ -S -g -O0 source.cpp -o source.s
+mkdir -p ${BIN_DIR}
 
-g++ -O0 source_tmp_var.cpp -o ./bin/source_tmp_var
-g++ -S -g -O0 source_tmp_var.cpp -o source_tmp_var.s
+build_and_get_asm() {
+    src=$1
+    opt_ox="$2"
+    bname=$(basename ${src})
 
-g++ -O2 source.cpp -o ./bin/source_o2
-g++ -S -g -O2 source.cpp -o source_o2.s
+    out="${BIN_DIR}/${bname/.cpp/${opt_ox}}"
+    g++ ${opt_ox} ${src} -o ${out}
 
-g++ -O2 source_tmp_var.cpp -o ./bin/source_tmp_var_o2
-g++ -S -g -O2 source_tmp_var.cpp -o source_tmp_var_o2.s
+    out_asm="./${bname/.cpp/${opt_ox}.s}"
+    g++ -S -g ${opt_ox} ${src} -o ${out_asm}
+}
+
+run_all() {
+    for binary in $(ls ${BIN_DIR}); do
+        echo "${BIN_DIR}/${binary}"
+        ./${BIN_DIR}/${binary}
+    done
+}
+
+build_and_get_asm source.cpp -O0
+
+build_and_get_asm source.cpp -O2
+
+build_and_get_asm source_tmp_var.cpp -O0
+
+build_and_get_asm source_tmp_var.cpp -O2
+
+run_all
