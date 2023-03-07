@@ -2,8 +2,10 @@
 #include <cstdlib>
 #include <ctime>
 
-// Number of loop unrolling
-#define UNROLL 2
+// The number of loop unrolling
+#ifndef UNROLL
+#define UNROLL 1
+#endif // UNROOL
 
 // Matrix multiplication with loop unrolling
 static inline float matmul(float **a, float **b, float **c, const int N) {
@@ -28,7 +30,7 @@ static inline float matmul(float **a, float **b, float **c, const int N) {
             }
 #else
             }
-#endif
+#endif // (UNROLL != 1)
         }
     }
 
