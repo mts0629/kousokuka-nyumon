@@ -42,3 +42,15 @@ sum = 36028797018963968.000000
 
 elapsed time =       0.0698980 sec
 ```
+
+## 2次元配列への書き込み
+
+参照と同様に、2次元配列への書き込み動作もアクセス方向により性能が変動する。
+
+```sh
+./bin/horizontal
+elapsed time =       0.0245710 sec
+
+./bin/vertical
+elapsed time =       0.8166950 sec
+```
