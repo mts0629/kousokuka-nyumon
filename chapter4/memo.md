@@ -54,3 +54,31 @@ elapsed time =       0.0245710 sec
 ./bin/vertical
 elapsed time =       0.8166950 sec
 ```
+
+## サブブロックへ分割
+
+対象の二次元配列を小サイズのサブブロックへ分割して処理する（ストリップマイニング）と、キャッシュラインに乗っているデータを再度参照でき、キャッシュヒットミスの回数を削減できる。
+
+最適な分割単位は、キャッシュメモリの容量やキャッシュラインのサイズなどによって変わる。
+ここでは 16x16 の単位に分割している。
+
+```cpp
+for (int jOffset = 0; jOffset < N; jOffset += 16) {
+    for (int iOffset = 0; iOffset < N; iOffset += 16) {
+        for (int i = iOffset; i < (iOffset + 16); i++) {
+            for (int j = jOffset; j < (jOffset + 16); j++) {
+                sum += a[j][i];
+            }
+        }
+    }
+}
+```
+
+最内ループが垂直方向への参照となっているが、キャッシュを参照できているために速度が上がっている。
+
+```sh
+./bin/subblock
+sum = 36028797018963968.000000
+
+elapsed time =       0.0716790 sec
+```
