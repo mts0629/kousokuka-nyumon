@@ -34,12 +34,12 @@
 O2最適化適用時の実行時間を確認すると、アンロール数に伴って性能が向上している。
 
 ```sh
-./bin/source
-Elapsed time =       1.2021410 sec
-./bin/source-DUNROLL=2
-Elapsed time =       0.8704390 sec
-./bin/source-DUNROLL=4
-Elapsed time =       0.6476470 sec
-./bin/source-DUNROLL=8
-Elapsed time =       0.5390590 sec
+./bin/base
+Elapsed time =       1.2579221 sec
+./bin/base_unroll_2
+Elapsed time =       0.8946100 sec
+./bin/base_unroll_4
+Elapsed time =       0.7170140 sec
+./bin/base_unroll_8
+Elapsed time =       0.5763710 sec
 ```

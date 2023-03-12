@@ -7,8 +7,25 @@
 #define UNROLL 1
 #endif // UNROOL
 
-// Matrix multiplication with loop unrolling
-static inline float matmul(float **a, float **b, float **c, const int N) {
+int main()
+{
+    const int N = 1024;
+
+    // Initialize
+    float **a = new float*[N];
+    float **b = new float*[N];
+    float **c = new float*[N];
+    for (int i = 0; i < N; i++) {
+        a[i] = new float[N];
+        b[i] = new float[N];
+        c[i] = new float[N];
+        for (int j = 0; j < N; j++) {
+            a[i][j] = static_cast<float>(rand() / 4096);
+            b[i][j] = static_cast<float>(rand() / 4096);
+            c[i][j] = 0.0f;
+        }
+    }
+
     clock_t startTime = clock();
 
     for (int i = 0; i < N; i++) {
@@ -36,29 +53,7 @@ static inline float matmul(float **a, float **b, float **c, const int N) {
 
     clock_t stopTime = clock();
 
-    return static_cast<float>(stopTime - startTime) / CLOCKS_PER_SEC;
-}
-
-int main()
-{
-    const int N = 1024;
-
-    // Initialize
-    float **a = new float*[N];
-    float **b = new float*[N];
-    float **c = new float*[N];
-    for (int i = 0; i < N; i++) {
-        a[i] = new float[N];
-        b[i] = new float[N];
-        c[i] = new float[N];
-        for (int j = 0; j < N; j++) {
-            a[i][j] = static_cast<float>(rand() / 4096);
-            b[i][j] = static_cast<float>(rand() / 4096);
-            c[i][j] = 0.0f;
-        }
-    }
-
-    float eTime = matmul(a, b, c, N);
+    float eTime = static_cast<float>(stopTime - startTime) / CLOCKS_PER_SEC;
 
     printf("Elapsed time = %15.7f sec\n", eTime);
 

@@ -1,27 +1,11 @@
 #!/bin/bash -eu
 
-BIN_DIR=./bin
+source ../../util/util_cmd.sh
 
-mkdir -p ${BIN_DIR}
+clean
 
-build() {
-    src=$1
-    options="${2:-}"
-    bname=$(basename ${src})
+build horizontal.cpp -O2 horizontal
 
-    out="${BIN_DIR}/${bname/.cpp/${options}}"
-    g++ -O2 ${options} ${src} -o ${out}
-}
-
-run_all() {
-    for binary in $(ls ${BIN_DIR}); do
-        echo "${BIN_DIR}/${binary}"
-        ./${BIN_DIR}/${binary}
-    done
-}
-
-build horizontal.cpp
-
-build vertical.cpp
+build vertical.cpp -O2 vertical
 
 run_all

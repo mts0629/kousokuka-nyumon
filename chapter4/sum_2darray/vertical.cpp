@@ -31,10 +31,10 @@ int main()
 
     clock_t stopTime = clock();
 
-    printf("sum = %f\n\n", sum);
+    printf("Sum = %f\n\n", sum);
 
     float eTime = static_cast<float>(stopTime - startTime) / CLOCKS_PER_SEC;
-    printf("elapsed time = %15.7f sec\n", eTime);
+    printf("Elapsed time = %15.7f sec\n", eTime);
 
     return 0;
 }

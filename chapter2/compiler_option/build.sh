@@ -1,38 +1,25 @@
 #!/bin/bash -eu
 
-BIN_DIR=./bin
+source ../../util/util_cmd.sh
 
-mkdir -p ${BIN_DIR}
+clean
 
-build_and_get_asm() {
-    src=$1
-    opt_ox="$2"
-    bname=$(basename ${src})
+build source.cpp -O0 source-O0
+asm source.cpp -O0 source-O0.s
 
-    out="${BIN_DIR}/${bname/.cpp/${opt_ox}}"
-    g++ ${opt_ox} ${src} -o ${out}
+build source.cpp -O1 source-O1
+asm source.cpp -O1 source-O1.s
 
-    out_asm="./${bname/.cpp/${opt_ox}.s}"
-    g++ -S -g ${opt_ox} ${src} -o ${out_asm}
-}
+build source.cpp -O2 source-O2
+asm source.cpp -O2 source-O2.s
 
-run_all() {
-    for binary in $(ls ${BIN_DIR}); do
-        echo "${BIN_DIR}/${binary}"
-        ./${BIN_DIR}/${binary}
-    done
-}
+build source.cpp -O3 source-O3
+asm source.cpp -O3 source-O3.s
 
-build_and_get_asm source.cpp -O0
+build source.cpp -Os source-Os
+asm source.cpp -Os source-Os.s
 
-build_and_get_asm source.cpp -O1
-
-build_and_get_asm source.cpp -O2
-
-build_and_get_asm source.cpp -O3
-
-build_and_get_asm source.cpp -Os
-
-build_and_get_asm source.cpp -Ofast
+build source.cpp -Ofast source-Ofast
+asm source.cpp -Ofast source-Ofast.s
 
 run_all

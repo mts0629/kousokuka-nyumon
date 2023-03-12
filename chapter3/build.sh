@@ -1,31 +1,19 @@
 #!/bin/bash -eu
 
-BIN_DIR=./bin
+source ../util/util_cmd.sh
 
-mkdir -p ${BIN_DIR}
+clean
 
-build_and_get_asm() {
-    src=$1
-    options="${2:-}"
-    bname=$(basename ${src})
+build source.cpp -O2 base
+asm source.cpp -O2 base.s
 
-    out="${BIN_DIR}/${bname/.cpp/${options}}"
-    g++ -O2 ${options} ${src} -o ${out}
+build source.cpp "-O2 -DUNROLL=2" base_unroll_2
+asm source.cpp "-O2 -DUNROLL=2" base_unroll_2.s
 
-    out_asm="./${bname/.cpp/${options}.s}"
-    g++ -S -g -O2 ${options} ${src} -o ${out_asm}
-}
+build source.cpp "-O2 -DUNROLL=4" base_unroll_4
+asm source.cpp "-O2 -DUNROLL=4" base_unroll_4.s
 
-run_all() {
-    for binary in $(ls ${BIN_DIR}); do
-        echo "${BIN_DIR}/${binary}"
-        ./${BIN_DIR}/${binary}
-    done
-}
-
-build_and_get_asm source.cpp
-build_and_get_asm source.cpp -DUNROLL=2
-build_and_get_asm source.cpp -DUNROLL=4
-build_and_get_asm source.cpp -DUNROLL=8
+build source.cpp "-O2 -DUNROLL=8" base_unroll_8
+asm source.cpp "-O2 -DUNROLL=8" base_unroll_8.s
 
 run_all
